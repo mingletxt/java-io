@@ -1,3 +1,5 @@
+package com.taobao.feidu;
+
 /**
  * User: feidu
  * Date: 13-2-19
