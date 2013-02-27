@@ -13,20 +13,18 @@ import java.nio.charset.Charset;
  */
 public class CharSetTest {
     public static void main(String args[]) throws Exception {
-        String file = "stream.txt";
-        String charset = "UTF-8";
         // 写字符换转成字节流
-        FileOutputStream outputStream = new FileOutputStream(file);
-        OutputStreamWriter writer = new OutputStreamWriter(outputStream, charset);
+        FileOutputStream outputStream = new FileOutputStream(Constants.CHAR_FILE);
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, Constants.CHAR_SET);
         try {
-            writer.write("这是要保存的中文字符");
+            writer.write("这是要保存的中文字符哦English");
         } finally {
             writer.close();
         }
         //读取字节转换成字符
-        InputStream inputStream = new FileInputStream(file);
+        InputStream inputStream = new FileInputStream(Constants.CHAR_FILE);
         inputStream = new BufferedInputStream(inputStream);
-        InputStreamReader reader = new InputStreamReader(inputStream, charset);
+        InputStreamReader reader = new InputStreamReader(inputStream, Constants.CHAR_SET);
         StringBuffer buffer = new StringBuffer();
         char[] buf = new char[64];
         int count = 0;

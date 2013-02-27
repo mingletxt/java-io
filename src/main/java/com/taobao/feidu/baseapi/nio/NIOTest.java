@@ -1,6 +1,5 @@
-package com.taobao.feidu.baseapi;
+package com.taobao.feidu.baseapi.nio;
 
-import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -11,38 +10,22 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * User: mingle
- * Date: 12-11-21
- * Time: 下午11:17
- * desc: http://my.oschina.net/caiyuan/blog/32093
+ * User: feidu
+ * Date: 13-2-22
+ * Time: 下午3:33
  */
-public class IOTest {
-    public static void main(String args[]) throws Exception {
-        OutputStream out = new BufferedOutputStream(new ObjectOutputStream(new FileOutputStream("fileName")));
-
-        try {
-            StringBuffer str = new StringBuffer();
-            char[] buf = new char[1024];
-            FileReader f = new FileReader("file");
-            while (f.read(buf) > 0) {
-                str.append(buf);
-            }
-            str.toString();
-        } catch (IOException e) {
-        }
-    }
-
-    public void selector() throws IOException {
+public class NIOTest {
+    static public void main(String[] args) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         Selector selector = Selector.open();
         ServerSocketChannel ssc = ServerSocketChannel.open();
         ssc.configureBlocking(false);//设置为非阻塞方式
         ssc.socket().bind(new InetSocketAddress(8080));
-        ssc.register(selector, SelectionKey.OP_ACCEPT);
-        //注册监听的事件
+        ssc.register(selector,
+                SelectionKey.OP_ACCEPT);//注册监听的事件
         while (true) {
-            Set selectedKeys = selector.selectedKeys();
-            //取得所有key集合
+            Set selectedKeys = selector.selectedKeys();//取得所有key集合
+
             Iterator it = selectedKeys.iterator();
             while (it.hasNext()) {
                 SelectionKey key = (SelectionKey) it.next();
@@ -57,8 +40,7 @@ public class IOTest {
                     SocketChannel sc = (SocketChannel) key.channel();
                     while (true) {
                         buffer.clear();
-                        int n = sc.read(buffer);
-                        //读取数据
+                        int n = sc.read(buffer);//读取数据
                         if (n <= 0) {
                             break;
                         }
@@ -70,4 +52,3 @@ public class IOTest {
         }
     }
 }
-
