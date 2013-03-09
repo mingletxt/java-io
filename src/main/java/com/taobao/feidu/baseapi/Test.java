@@ -9,5 +9,6 @@ public class Test {
     public static void main(String[] args) {
         String your_os = System.getProperty("os.name").toLowerCase();
         System.out.println(your_os);
+        System.out.println("mingle");
     }
 }
